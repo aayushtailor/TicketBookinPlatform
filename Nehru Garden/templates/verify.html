@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Verify Ticket — Nehru Garden</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .card {
+        background: #fff;
+        width: 100%;
+        max-width: 420px;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        color: #21d4fd;
+      }
+      .row {
+        margin: 8px 0;
+        font-size: 15px;
+      }
+      .muted {
+        color: #666;
+        font-size: 13px;
+      }
+      .btn {
+        display: block;
+        margin-top: 18px;
+        background: linear-gradient(45deg, #21d4fd, #b721ff);
+        color: #fff;
+        padding: 12px;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .btn:disabled {
+        opacity: 0.6;
+      }
+      .status {
+        margin-top: 12px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Ticket Verification</h2>
+
+      <div class="row"><strong>Name:</strong> {{ booking.name or '—' }}</div>
+      <div class="row"><strong>Phone:</strong> {{ booking.phone or '—' }}</div>
+      <div class="row"><strong>Date:</strong> {{ booking.date or '—' }}</div>
+      <div class="row">
+        <strong>Time Slot:</strong> {{ booking.time or '—' }}
+      </div>
+      <div class="row">
+        <strong>Ticket:</strong> {{ booking.ticket_type or '—' }}
+      </div>
+      <div class="row">
+        <strong>Quantity:</strong> {{ booking.quantity or '—' }}
+      </div>
+      <div class="row muted"><strong>Booking ID:</strong> {{ booking.id }}</div>
+
+      <button id="verifyBtn" class="btn">Verify Ticket</button>
+
+      <div id="result" class="status"></div>
+    </div>
+
+    <script>
+      const bookingId = {{ booking.id }};
+      const btn = document.getElementById("verifyBtn");
+      const result = document.getElementById("result");
+
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "Verifying…";
+        try {
+          const res = await fetch("/api/verify_ticket/" + bookingId, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            result.textContent = "✅ Verified — " + data.name;
+            btn.textContent = "Verified";
+            btn.disabled = true;
+          } else {
+            // show error message
+            result.textContent = "❌ " + (data.message || "Verification failed");
+            btn.textContent = "Verify Ticket";
+            btn.disabled = false;
+          }
+        } catch (err) {
+          console.error(err);
+          result.textContent = "⚠ Error contacting server";
+          btn.textContent = "Verify Ticket";
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

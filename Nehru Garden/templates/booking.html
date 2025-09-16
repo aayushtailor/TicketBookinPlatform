@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Nehru Garden Boating — Book Tickets</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+
+    <style>
+      body {
+        background: #f9f9fc;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .booking-container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        max-width: 520px;
+        width: 100%;
+      }
+      .booking-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(45deg, #21d4fd, #b721ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .booking-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .booking-form input,
+      .booking-form select {
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-size: 15px;
+        outline: none;
+        transition: 0.25s;
+      }
+      .booking-form input:focus,
+      .booking-form select:focus {
+        border-color: #21d4fd;
+        box-shadow: 0 0 8px rgba(33, 212, 253, 0.35);
+      }
+      .btn-glow {
+        background: linear-gradient(45deg, #21d4fd, #b721ff);
+        color: white;
+        padding: 12px;
+        border-radius: 25px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+      }
+      .btn-glow:hover {
+        opacity: 0.85;
+      }
+      .top-nav {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+      }
+      .top-nav a {
+        font-size: 14px;
+        background: linear-gradient(45deg, #21d4fd, #b721ff);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-nav">
+      <a href="{{ url_for('home') }}">← Home</a>
+    </div>
+
+    <div class="booking-container">
+      <h2>🎟 Book Your Boating Slot</h2>
+
+      <form id="bookingForm" class="booking-form">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Full name"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email address"
+          required
+        />
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Phone number"
+          required
+        />
+
+        <!-- State dropdown -->
+        <select id="state" name="state" required>
+          <option value="">🏳️ Select State</option>
+        </select>
+
+        <!-- City input with datalist (allows custom typing + dropdown) -->
+        <input
+          id="city"
+          name="city"
+          list="cityOptions"
+          placeholder="🏙️ Select or type City"
+          required
+        />
+        <datalist id="cityOptions"></datalist>
+
+        <select id="slot" name="time" required>
+          <option value="">⏰ Select time slot</option>
+          <option>10:00 AM - 11:00 AM</option>
+          <option>11:00 AM - 12:00 PM</option>
+          <option>4:00 PM - 5:00 PM</option>
+          <option>5:00 PM - 6:00 PM</option>
+        </select>
+
+        <select id="ticket_type" name="ticket_type" required>
+          <option value="">🎫 Select ticket type</option>
+          <option value="indian_adult">🇮🇳 Indian Adult – ₹210.04</option>
+          <option value="indian_child">🇮🇳 Indian Child – ₹105.02</option>
+          <option value="foreign_adult">🌍 Foreign Adult – ₹420.08</option>
+          <option value="foreign_child">🌍 Foreign Child – ₹210.04</option>
+          <option value="luxury_private">
+            🚤 Luxury Private Boat – ₹3150.60 (Max 15)
+          </option>
+        </select>
+
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          min="1"
+          max="30"
+          value="1"
+          required
+        />
+
+        <button type="submit" class="btn-glow">Book Now</button>
+      </form>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+      // Example state → cities map (add more as needed)
+      const stateCityMap = {
+        Andhra_Pradesh: [
+          "Visakhapatnam",
+          "Vijayawada",
+          "Guntur",
+          "Tirupati",
+          "Kakinada",
+        ],
+        Arunachal_Pradesh: [
+          "Itanagar",
+          "Naharlagun",
+          "Pasighat",
+          "Tawang",
+          "Ziro",
+        ],
+        Assam: ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Tezpur"],
+        Bihar: ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga"],
+        Chhattisgarh: ["Raipur", "Bilaspur", "Durg", "Korba", "Rajnandgaon"],
+        Goa: ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda"],
+        Haryana: ["Gurugram", "Faridabad", "Panipat", "Ambala", "Hisar"],
+        Himachal_Pradesh: ["Shimla", "Manali", "Dharamshala", "Solan", "Mandi"],
+        Jharkhand: ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Hazaribagh"],
+        Kerala: [
+          "Thiruvananthapuram",
+          "Kochi",
+          "Kozhikode",
+          "Kollam",
+          "Alappuzha",
+        ],
+        Madhya_Pradesh: ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"],
+        Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad"],
+        Manipur: ["Imphal", "Thoubal", "Bishnupur", "Churachandpur"],
+        Meghalaya: ["Shillong", "Tura", "Nongstoin", "Jowai"],
+        Mizoram: ["Aizawl", "Lunglei", "Champhai", "Serchhip"],
+        Nagaland: ["Kohima", "Dimapur", "Mokokchung", "Tuensang"],
+        Odisha: ["Bhubaneswar", "Cuttack", "Rourkela", "Puri", "Sambalpur"],
+        Punjab: ["Amritsar", "Ludhiana", "Jalandhar", "Patiala", "Bathinda"],
+        Rajasthan: ["Jaipur", "Udaipur", "Jodhpur", "Ajmer", "Kota"],
+        Sikkim: ["Gangtok", "Namchi", "Geyzing", "Mangan"],
+        Tamil_Nadu: [
+          "Chennai",
+          "Coimbatore",
+          "Madurai",
+          "Tiruchirappalli",
+          "Salem",
+        ],
+        Telangana: ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
+        Tripura: ["Agartala", "Dharmanagar", "Udaipur", "Kailashahar"],
+        Uttar_Pradesh: ["Lucknow", "Kanpur", "Agra", "Varanasi", "Noida"],
+        Uttarakhand: ["Dehradun", "Haridwar", "Nainital", "Roorkee"],
+        West_Bengal: ["Kolkata", "Howrah", "Durgapur", "Siliguri", "Asansol"],
+        Delhi: ["New Delhi", "Dwarka", "Rohini", "Saket", "Karol Bagh"],
+        Chandigarh: ["Chandigarh"],
+        Jammu_and_Kashmir: ["Srinagar", "Jammu", "Anantnag", "Baramulla"],
+        Ladakh: ["Leh", "Kargil"],
+        Puducherry: ["Puducherry", "Karaikal", "Mahe", "Yanam"],
+        Andaman_and_Nicobar_Islands: ["Port Blair", "Havelock", "Diglipur"],
+        Dadra_and_Nagar_Haveli_and_Daman_and_Diu: ["Silvassa", "Daman", "Diu"],
+        Lakshadweep: ["Kavaratti", "Agatti", "Minicoy"],
+      };
+
+      const stateSelect = document.getElementById("state");
+      const cityInput = document.getElementById("city");
+      const cityOptions = document.getElementById("cityOptions");
+
+      // Populate states
+      Object.keys(stateCityMap).forEach((state) => {
+        let opt = document.createElement("option");
+        opt.value = state;
+        opt.textContent = state;
+        stateSelect.appendChild(opt);
+      });
+
+      // When state changes → refresh datalist options
+      stateSelect.addEventListener("change", () => {
+        cityOptions.innerHTML = "";
+        if (stateCityMap[stateSelect.value]) {
+          stateCityMap[stateSelect.value].forEach((city) => {
+            let opt = document.createElement("option");
+            opt.value = city;
+            cityOptions.appendChild(opt);
+          });
+        }
+      });
+
+      // Razorpay booking flow
+      (function () {
+        const ticketType = document.querySelector('select[name="ticket_type"]');
+        const qtyInput = document.querySelector('input[name="quantity"]');
+        const form = document.getElementById("bookingForm");
+
+        ticketType.addEventListener("change", () => {
+          if (ticketType.value === "luxury_private") {
+            qtyInput.value = 15;
+            qtyInput.disabled = true;
+            qtyInput.max = 15;
+          } else {
+            qtyInput.disabled = false;
+            qtyInput.max = 30;
+          }
+        });
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(form).entries());
+
+          try {
+            const res = await fetch("/create_order", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            if (!res.ok) {
+              alert("Server error: " + res.status);
+              return;
+            }
+            const order = await res.json();
+
+            const options = {
+              key: "rzp_test_RGZngIKJRY2DJd", // ⚠️ Replace with live key later
+              amount: order.amount,
+              currency: order.currency,
+              name: "Nehru Garden Boating",
+              description: "Ticket Booking",
+              order_id: order.id,
+              handler: async function (response) {
+                try {
+                  const verifyRes = await fetch("/verify_payment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      razorpay_payment_id: response.razorpay_payment_id,
+                      razorpay_order_id: response.razorpay_order_id,
+                      razorpay_signature: response.razorpay_signature,
+                      booking_data: data,
+                    }),
+                  });
+
+                  const verifyData = await verifyRes.json();
+
+                  if (verifyData.success) {
+                    window.location.href =
+                      "/confirmation/" + verifyData.booking_id;
+                  } else {
+                    alert(
+                      "❌ Payment verification failed: " + verifyData.message
+                    );
+                  }
+                } catch (err) {
+                  alert("⚠ Error verifying payment.");
+                  console.error(err);
+                }
+              },
+              prefill: { name: data.name || "", contact: data.phone || "" },
+              theme: { color: "#21d4fd" },
+            };
+            new Razorpay(options).open();
+          } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nehru Garden Island Boating</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Fonts & Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand">Nehru Garden Island Boating</div>
+      <a href="{{ url_for('booking_page') }}" class="btn-glow">Book Now</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <video autoplay muted loop playsinline class="hero-bg">
+        <source
+          src="{{ url_for('static', filename='images/video1.mp4') }}"
+          type="video/mp4"
+        />
+      </video>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Welcome to <span>Nehru Garden Island Boating</span>
+        </h1>
+        <p class="hero-subtitle">
+          Experience the beauty of Udaipur from the waters
+        </p>
+        <a href="{{ url_for('booking_page') }}" class="btn-glow">Book Now</a>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing-section">
+      <div class="container">
+        <h2 class="section-title">Ticket Prices</h2>
+        <div class="package-grid">
+          <div class="package-card">
+            <img
+              src="https://www.rajasthantourplanner.com/blog/wp-content/uploads/2021/02/Boat-Ride-in-Lake-Pichola-Udaipur.jpg"
+              alt="Indian Adults"
+            />
+            <h3>🇮🇳 Indian Adults</h3>
+            <p class="price-tag">₹210.04</p>
+          </div>
+          <div class="package-card">
+            <img
+              src="https://www.greatlakesscuttlebutt.com/images/news/2018/04/Boatingwithkids_4_med.jpg"
+              alt="Indian Children"
+            />
+            <h3>🇮🇳 Indian Children</h3>
+            <p class="price-tag">₹105.02</p>
+          </div>
+          <div class="package-card">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBJmp6IwDidGJnymh0avfKH5AtGgeqrK1TQw&s"
+              alt="Foreign Adults"
+            />
+            <h3>🌍 Foreign Adults</h3>
+            <p class="price-tag">₹420.08</p>
+          </div>
+          <div class="package-card">
+            <img
+              src="https://www.thepassportkids.com/wp-content/uploads/2016/08/Boating-Kids-3.jpg"
+              alt="Foreign Children"
+            />
+            <h3>🌍 Foreign Children</h3>
+            <p class="price-tag">₹210.04</p>
+          </div>
+        </div>
+        <div class="pricing-note">
+          <b>
+            <p>
+              <strong>Child / बच्चे:</strong> Upto 110 cm height / 110 सेमी
+              ऊँचाई तक
+            </p>
+            <p>
+              ⚠ Strictly Follow Do's and Don'ts / ⚠ कृपया नियमों का पालन करें
+            </p>
+          </b>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section id="packages" class="packages-section">
+      <div class="container">
+        <h2 class="section-title">Our Boat Packages</h2>
+        <div class="package-grid">
+          <div class="package-card">
+            <img
+              src="{{ url_for('static',filename='images/img1.png') }}"
+              alt="Single Ticket"
+            />
+            <h3>🎟 Single Ticket</h3>
+            <p class="price-tag">From ₹105.02</p>
+            <ul class="package-details">
+              <li>Indian Adults: ₹210.04</li>
+              <li>Indian Children: ₹105.02</li>
+              <li>Foreign Adults: ₹420.08</li>
+              <li>Foreign Children: ₹210.04</li>
+            </ul>
+          </div>
+          <div class="package-card">
+            <img
+              src="{{ url_for('static', filename='images/img2.png') }}"
+              alt="Family Boat"
+            />
+            <h3>🚤 Family Boat</h3>
+            <p class="price-tag">₹3150</p>
+            <ul class="package-details">
+              <li>Max 15 Persons</li>
+              <li>Perfect for Families & Groups</li>
+            </ul>
+          </div>
+          <div class="package-card">
+            <img
+              src="{{ url_for('static', filename='images/img3.png') }}"
+              alt="Luxury Boat"
+            />
+            <h3>🛥 Luxury Private Boat</h3>
+            <p class="price-tag">₹3150.60</p>
+            <ul class="package-details">
+              <li>No Minimum Members</li>
+              <li>Max 15 Members</li>
+              <li>Private & Premium Experience</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section">
+      <h2 class="section-title">Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img
+            src="https://s7ap1.scene7.com/is/image/incredibleindia/city-palace-udaipur-rajasthan-7-musthead-hero"
+            alt="Garden"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://res.cloudinary.com/kmadmin/image/upload/v1722936123/kiomoi/Nehru_Garden%2C_Udaipur_4028.jpg"
+            alt="Lake"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://cdn.britannica.com/57/252557-050-5A6E4416/Udaipur-City-Palace-Rajasthan-India.jpg"
+            alt="Boating"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+      <div class="about-grid">
+        <div class="about-text">
+          <h2><b>About Us</b></h2>
+          <p>
+            Nehru Park is a garden located on an island in Udaipur's Fateh Sagar
+            Lake... Whether you’re here for a romantic sunset cruise, a fun
+            family ride, or a private event, we make sure your experience is
+            special.
+          </p>
+        </div>
+        <div class="about-img">
+          <img
+            src="https://mediaim.expedia.com/localexpert/213900/3d2671dd-6fef-4693-9617-035a4244211b.jpg"
+            alt="About Nehru Park"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>
+          "Amazing experience! The staff was very friendly and the ride was
+          breathtaking."
+        </p>
+        <h4>- Ajay</h4>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>
+          "A must-visit in Udaipur! Peaceful, beautiful, and unforgettable."
+        </p>
+        <h4>- Pooja</h4>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Loved the sunset boat ride. Perfect for couples and families."</p>
+        <h4>- Ramesh</h4>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <section id="events" class="section events-section">
+      <div class="container">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="events-grid">
+          <div class="event-card">
+            <h3>🚤 Boat Festival</h3>
+            <p>
+              <b>Oct 5</b> – Celebrate boating culture with music, food, and fun
+              on the lake.
+            </p>
+          </div>
+          <div class="event-card">
+            <h3>🌿 Nature Walk</h3>
+            <p>
+              <b>Oct 12</b> – Guided walk around the island garden with
+              birdwatching.
+            </p>
+          </div>
+          <div class="event-card">
+            <h3>🌅 Sunset Cruise</h3>
+            <p>
+              <b>Every Saturday</b> – Enjoy a magical cruise with Udaipur’s
+              sunset views.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section" id="contact">
+      <h2 class="section-title">Contact Us</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>
+            <strong>📍 Location:</strong> Nehru Garden, Fateh Sagar Lake,
+            Udaipur
+          </p>
+          <p><strong>📞 Phone:</strong> +91 9876543210</p>
+          <p><strong>✉ Email:</strong> info@nehruGardenBoating.com</p>
+        </div>
+        <div class="map-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3627.7943459490302!2d73.67084827538403!3d24.596292655777326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e5e4a1e21081%3A0x6c6fe92a24bf849a!2sNehru%20Garden!5e0!3m2!1sen!2sin!4v1757580299726!5m2!1sen!2sin"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Nehru Garden Boating</p>
+      <div class="socials">
+        <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+        <a href="#">Twitter</a>
+      </div>
+    </footer>
+  </body>
+</html>
